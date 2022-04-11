@@ -1,41 +1,25 @@
-import { View } from 'react-native'
+import { useContext } from 'react'
+import { View, StyleSheet } from 'react-native'
+import { GlobalStyles } from '../../constants/styles'
 import ExpenseList from './ExpensesList'
 import ExpenseSummary from './ExpenseSummary'
-
-const DUMMY_EXPENSE = [
-  {
-    id: 'a1',
-    description: 'A pair of shoes',
-    amount: 59.99,
-    date: new Date('2022-04-20'),
-  },
-  {
-    id: 'a2',
-    description: 'A pair of trousers',
-    amount: 99.99,
-    date: new Date('2022-04-10'),
-  },
-  {
-    id: 'a3',
-    description: 'A pair of pants',
-    amount: 89.99,
-    date: new Date('2022-04-5'),
-  },
-  {
-    id: 'a4',
-    description: 'A pair of books',
-    amount: 22.99,
-    date: new Date('2022-04-1'),
-  },
-]
+import { ExpenseContext } from '../../store/expense-context'
 
 function ExpensesOutput({ expensePeriod }) {
+  const expenseCtx = useContext(ExpenseContext)
   return (
-    <View>
-      <ExpenseSummary periodName={expensePeriod} expenses={DUMMY_EXPENSE} />
-      <ExpenseList expenses={DUMMY_EXPENSE} />
+    <View style={styles.container}>
+      <ExpenseSummary periodName={expensePeriod} expenses={expenseCtx.item} />
+      <ExpenseList expenses={expenseCtx.item} />
     </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: GlobalStyles.colors.primary700,
+  },
+})
 
 export default ExpensesOutput
